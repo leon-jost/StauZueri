@@ -1,14 +1,16 @@
-package ch.leonjost.stauzueri;
+package ch.leonjost.stauzueri.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import ch.leonjost.stauzueri.R;
+
+public class StatistikActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_statistik);
     }
 }
