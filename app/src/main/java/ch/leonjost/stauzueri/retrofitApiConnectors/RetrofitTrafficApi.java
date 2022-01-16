@@ -1,4 +1,4 @@
-package ch.leonjost.stauzueri;
+package ch.leonjost.stauzueri.retrofitApiConnectors;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

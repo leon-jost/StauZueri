@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.leonjost.stauzueri.R;
-import ch.leonjost.stauzueri.TrafficListAdapter;
+import ch.leonjost.stauzueri.adapters.TrafficListAdapter;
 import ch.leonjost.stauzueri.pojo.Incident;
 import ch.leonjost.stauzueri.pojo.Traffic;
 import ch.leonjost.stauzueri.services.TrafficApiService;
@@ -37,8 +37,6 @@ public class StauActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stau);
-
-
     }
 
     @Override
@@ -94,13 +92,13 @@ public class StauActivity extends AppCompatActivity {
 
     private void InitializeRecyclerView() {
         // Lookup the recyclerview in activity layout
-        RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rvContacts);
+        RecyclerView incidentsRecyclerView = (RecyclerView) findViewById(R.id.incidentsRecyclerView);
         // Create adapter passing in the sample user data
         TrafficListAdapter adapter = new TrafficListAdapter(incidents, PreferenceManager.getDefaultSharedPreferences(getApplicationContext()), this);
         // Attach the adapter to the recyclerview to populate items
-        rvContacts.setAdapter(adapter);
+        incidentsRecyclerView.setAdapter(adapter);
         // Set layout manager to position the items
-        rvContacts.setLayoutManager(new LinearLayoutManager(this));
+        incidentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     public void switchToStatistikActivity(View view) {

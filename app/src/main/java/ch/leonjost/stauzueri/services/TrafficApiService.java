@@ -1,25 +1,19 @@
 package ch.leonjost.stauzueri.services;
 
-import static android.service.controls.ControlsProviderService.TAG;
-
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 
-import ch.leonjost.stauzueri.IRetrofitTrafficApi;
-import ch.leonjost.stauzueri.RetrofitTrafficApi;
+import ch.leonjost.stauzueri.retrofitApiConnectors.IRetrofitTrafficApi;
+import ch.leonjost.stauzueri.retrofitApiConnectors.RetrofitTrafficApi;
 import ch.leonjost.stauzueri.pojo.Incident;
 import ch.leonjost.stauzueri.pojo.Traffic;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
 public class TrafficApiService extends Service {
     public List<Incident> incidents = new ArrayList<>();

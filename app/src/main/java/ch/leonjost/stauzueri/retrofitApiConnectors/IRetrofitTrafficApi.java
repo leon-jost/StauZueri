@@ -1,4 +1,4 @@
-package ch.leonjost.stauzueri;
+package ch.leonjost.stauzueri.retrofitApiConnectors;
 
 import java.util.List;
 

@@ -44,7 +44,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvContacts"
+        android:id="@+id/incidentsRecyclerView"
         android:layout_width="412dp"
         android:layout_height="677dp"
         android:paddingLeft="10dp"

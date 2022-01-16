@@ -1,4 +1,4 @@
-package ch.leonjost.stauzueri;
+package ch.leonjost.stauzueri.adapters;
 
 
 import android.content.Context;
@@ -13,8 +13,6 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
@@ -24,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import ch.leonjost.stauzueri.R;
 import ch.leonjost.stauzueri.activities.StauActivity;
 import ch.leonjost.stauzueri.pojo.Incident;
 
@@ -110,15 +109,15 @@ public class TrafficListAdapter extends RecyclerView.Adapter<TrafficListAdapter.
     @Override
     public void onBindViewHolder(TrafficListAdapter.ViewHolder holder, int position) {
         // Get the data model based on position
-        String art = incidents.get(position).getProperties().events.get(0).description;
-        String from = incidents.get(position).getProperties().from;
-        String to = incidents.get(position).getProperties().to;
+        String art = incidents.get(position).getProperties().getEvents().get(0).getDescription();
+        String from = incidents.get(position).getProperties().getFrom();
+        String to = incidents.get(position).getProperties().getTo();
 
         int time = incidents.get(position).getProperties().getDelay();
         Date date = new Date((long) (time * 1000L));
         String formattedDate = new SimpleDateFormat("HH:mm:ss").format(date);
 
-        double distance = incidents.get(position).getProperties().length;
+        double distance = incidents.get(position).getProperties().getLength();
         BigDecimal bigDecimal = new BigDecimal(Double.toString(distance));
         bigDecimal = bigDecimal.setScale(2, RoundingMode.HALF_UP);
         distance = bigDecimal.doubleValue();
@@ -139,7 +138,7 @@ public class TrafficListAdapter extends RecyclerView.Adapter<TrafficListAdapter.
         openInBrowserButton.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format(
                     Locale.ENGLISH, "https://maps.google.com/maps?q=loc:%f,%f",
-                    incidents.get(position).geometry.coordinates.get(0).get(1), incidents.get(position).geometry.coordinates.get(0).get(0))));
+                    incidents.get(position).getGeometry().getCoordinates().get(0).get(1), incidents.get(position).getGeometry().getCoordinates().get(0).get(0))));
             stauActivity.startActivity(intent);
         });
     }
