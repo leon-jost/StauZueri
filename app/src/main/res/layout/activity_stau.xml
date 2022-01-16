@@ -13,6 +13,8 @@
         android:background="#009688"
         android:gravity="center"
         android:orientation="horizontal"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,14 +24,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/stau_unfaelle"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/switchToStatistikActivity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/statistik" />
+            android:background="@color/white"
+            android:onClick="switchToStatistikActivity"
+            android:shadowColor="@color/design_default_color_error"
+            android:text="@string/statistik"
+            android:textColor="@color/green_blue" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

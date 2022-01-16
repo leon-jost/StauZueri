@@ -10,7 +10,9 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,10 +96,15 @@ public class StauActivity extends AppCompatActivity {
         // Lookup the recyclerview in activity layout
         RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rvContacts);
         // Create adapter passing in the sample user data
-        TrafficListAdapter adapter = new TrafficListAdapter(incidents);
+        TrafficListAdapter adapter = new TrafficListAdapter(incidents, PreferenceManager.getDefaultSharedPreferences(getApplicationContext()), this);
         // Attach the adapter to the recyclerview to populate items
         rvContacts.setAdapter(adapter);
         // Set layout manager to position the items
         rvContacts.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    public void switchToStatistikActivity(View view) {
+        Intent intent = new Intent(this, StatistikActivity.class);
+        startActivity(intent);
     }
 }
