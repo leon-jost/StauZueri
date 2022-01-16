@@ -19,6 +19,12 @@
             android:padding="20dp">
 
             <TextView
+                android:id="@+id/art"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
                 android:id="@+id/from"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,11 +49,14 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/openInBrowser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:text="@string/aufMapsAnsehen" />
+                android:background="@color/green_blue"
+                android:text="@string/aufMapsAnsehen"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
