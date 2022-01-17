@@ -4,4 +4,5 @@
     <string name="statistik">Statistik</string>
     <string name="aufMapsAnsehen">Auf Google Maps ansehen</string>
     <string name="laengste_aufgezeichnete_verzoegerung">Längste bis jetzt aufgezeichnete Verzögerung:</string>
+    <string name="no_incidents">Es gibt im Moment keine Verzögerungen.</string>
 </resources>

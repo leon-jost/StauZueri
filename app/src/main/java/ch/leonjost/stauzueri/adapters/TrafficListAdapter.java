@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.speech.RecognizerIntent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.w3c.dom.Text;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -31,12 +34,14 @@ import ch.leonjost.stauzueri.pojo.Incident;
 public class TrafficListAdapter extends RecyclerView.Adapter<TrafficListAdapter.ViewHolder> {
     private final String longestRecordedDelayKey = "longestRecordedDelay";
     StauActivity stauActivity;
+    private List<Incident> incidents = new ArrayList<>();
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
     public class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
+        public RecyclerView incidentsRecyclerView;
         public TextView artTextView;
         public TextView fromTextView;
         public TextView toTextView;
@@ -51,6 +56,7 @@ public class TrafficListAdapter extends RecyclerView.Adapter<TrafficListAdapter.
             // to access the context from any ViewHolder instance.
             super(itemView);
 
+            incidentsRecyclerView = (RecyclerView) stauActivity.findViewById(R.id.incidentsRecyclerView);
             artTextView = (TextView) itemView.findViewById(R.id.art);
             fromTextView = (TextView) itemView.findViewById(R.id.from);
             toTextView = (TextView) itemView.findViewById(R.id.to);
@@ -60,35 +66,44 @@ public class TrafficListAdapter extends RecyclerView.Adapter<TrafficListAdapter.
         }
     }
 
-    // Store a member variable for the contacts
-    private List<Incident> incidents = new ArrayList<>();
-
     // Pass in the contact array into the constructor
     public TrafficListAdapter(List<Incident> incidents, SharedPreferences sharedPreferences, StauActivity stauActivity) {
         this.stauActivity = stauActivity;
 
-        // only add incidents, which have a delay
-        for (Incident incident : incidents) {
-            if (incident.getProperties().getDelay() > 0) {
-                this.incidents.add(incident);
+        // if there are not incidents => notify the user
+        if (incidents.isEmpty()) {
+            TextView noIncidentsTextView = (TextView) stauActivity.findViewById(R.id.noIncidents);
+            noIncidentsTextView.setVisibility(View.VISIBLE);
+        } else {
+            // only add incidents, which have a delay
+            for (Incident incident : incidents) {
+                if (incident.getProperties().getDelay() > 0) {
+                    this.incidents.add(incident);
+                }
+            }
+
+            // if there are not incidents (after filtering) => notify the user
+            if (this.incidents.isEmpty()) {
+                TextView noIncidentsTextView = (TextView) stauActivity.findViewById(R.id.noIncidents);
+                noIncidentsTextView.setVisibility(View.VISIBLE);
+            } else {
+                // sort incidents (descending, based on delay)
+                Comparator<Incident> compareByDelay = Comparator.comparing(incident -> incident.getProperties().getDelay());
+                this.incidents.sort(compareByDelay.reversed());
+
+                // save incident if it is the longest recorded delay in the history of the app
+                int longestRecordedDelay = sharedPreferences.getInt(longestRecordedDelayKey, 0);
+                for (Incident incident : this.incidents) {
+                    if (incident.getProperties().getDelay() > longestRecordedDelay) {
+                        longestRecordedDelay = incident.getProperties().getDelay();
+                    }
+                }
+                // save new value
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt(longestRecordedDelayKey, longestRecordedDelay);
+                editor.apply();
             }
         }
-
-        // sort incidents (descending, based on delay)
-        Comparator<Incident> compareByDelay = Comparator.comparing(incident -> incident.getProperties().getDelay());
-        this.incidents.sort(compareByDelay.reversed());
-
-        // save incident if it is the longest recorded delay in the history of the app
-        int longestRecordedDelay = sharedPreferences.getInt(longestRecordedDelayKey, 0);
-        for (Incident incident : this.incidents) {
-            if (incident.getProperties().getDelay() > longestRecordedDelay) {
-                longestRecordedDelay = incident.getProperties().getDelay();
-            }
-        }
-        // save new value
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(longestRecordedDelayKey, longestRecordedDelay);
-        editor.apply();
     }
 
     // Usually involves inflating a layout from XML and returning the holder
@@ -108,6 +123,9 @@ public class TrafficListAdapter extends RecyclerView.Adapter<TrafficListAdapter.
     // Involves populating data into the item through holder
     @Override
     public void onBindViewHolder(TrafficListAdapter.ViewHolder holder, int position) {
+        RecyclerView incidentsRecyclerView = holder.incidentsRecyclerView;
+        incidentsRecyclerView.setVisibility(View.VISIBLE);
+
         // Get the data model based on position
         String art = incidents.get(position).getProperties().getEvents().get(0).getDescription();
         String from = incidents.get(position).getProperties().getFrom();
@@ -125,12 +143,16 @@ public class TrafficListAdapter extends RecyclerView.Adapter<TrafficListAdapter.
         // Set item views based on your views and data model
         TextView artTextView = holder.artTextView;
         artTextView.setText("Art: " + art);
+
         TextView fromTextView = holder.fromTextView;
         fromTextView.setText("Von: " + from);
+
         TextView toTextView = holder.toTextView;
         toTextView.setText("Nach: " + to);
+
         TextView timeTextView = holder.timeTextView;
         timeTextView.setText("Länge (Zeit): " + formattedDate);
+
         TextView distanceTextView = holder.distanceTextView;
         distanceTextView.setText("Länge (Distanz): " + distance + "m");
 
