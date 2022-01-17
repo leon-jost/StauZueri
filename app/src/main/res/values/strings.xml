@@ -5,4 +5,9 @@
     <string name="aufMapsAnsehen">Auf Google Maps ansehen</string>
     <string name="laengste_aufgezeichnete_verzoegerung">Längste bis jetzt aufgezeichnete Verzögerung:</string>
     <string name="no_incidents">Es gibt im Moment keine Verzögerungen.</string>
+    <string name="art">Art: %1$s</string>
+    <string name="von">Von: %1$s</string>
+    <string name="nach">Nach: %1$s</string>
+    <string name="laenge_zeit">Länge (Zeit): %1$s</string>
+    <string name="laenge_distanz">Länge (Distanz): %1$sm</string>
 </resources>

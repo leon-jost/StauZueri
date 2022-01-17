@@ -4,6 +4,7 @@ package ch.leonjost.stauzueri.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.speech.RecognizerIntent;
 import android.view.LayoutInflater;
@@ -141,20 +142,24 @@ public class TrafficListAdapter extends RecyclerView.Adapter<TrafficListAdapter.
         distance = bigDecimal.doubleValue();
 
         // Set item views based on your views and data model
+
+        // access resources
+        Resources resources = stauActivity.getResources();
+
         TextView artTextView = holder.artTextView;
-        artTextView.setText("Art: " + art);
+        artTextView.setText(String.format(resources.getString(R.string.art), art));
 
         TextView fromTextView = holder.fromTextView;
-        fromTextView.setText("Von: " + from);
+        fromTextView.setText(String.format(resources.getString(R.string.von), from));
 
         TextView toTextView = holder.toTextView;
-        toTextView.setText("Nach: " + to);
+        toTextView.setText(String.format(resources.getString(R.string.nach), to));
 
         TextView timeTextView = holder.timeTextView;
-        timeTextView.setText("Länge (Zeit): " + formattedDate);
+        timeTextView.setText(String.format(resources.getString(R.string.laenge_zeit), formattedDate));
 
         TextView distanceTextView = holder.distanceTextView;
-        distanceTextView.setText("Länge (Distanz): " + distance + "m");
+        distanceTextView.setText(String.format(resources.getString(R.string.laenge_distanz), String.valueOf(distance)));
 
         Button openInBrowserButton = holder.openInBrowserButton;
         openInBrowserButton.setOnClickListener(view -> {
