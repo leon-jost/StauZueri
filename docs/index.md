@@ -1,3 +1,5 @@
+Mit StauZueri lassen sich jegliche Verzögerungsmeldungen im Umfeld der Stadt Zürich sehr einfach einsehen. Die Verzögerungen werden absteigend nach Länge (Zeit) sortiert, damit die fatalsten Verzögerungen in kürzester Zeit erkannt werden können. Mit einem Klick kann der Standort der Verzögerung auf Google Maps angeschaut werden.
+
 ## Welcome to GitHub Pages
 
 You can use the [editor on GitHub](https://github.com/leon-jost/StauZueri/edit/master/docs/index.md) to maintain and preview the content for your website in Markdown files.
